@@ -1,0 +1,17 @@
+D:
+cd "D:\DataLoader\v62.0.1\bin"
+
+call process "D:\NLG\Conservation Case Automation\Config" CaseStagingInsert > "D:\NLG\Conservation Case Automation\Log\CaseStagingInsert.log"
+
+cd "D:\NLG\Conservation Case Automation\Config"
+
+set Mth=%Date:~4,2%
+set Day=%Date:~7,2%
+set Yr=%Date:~10,4%
+set Hr=%Time:~0,2%
+set Mn=%Time:~3,2%
+
+md "D:\NLG\Conservation Case Automation\Archive\Archive_%Mth%%Day%%Yr%%Hr%%Mn%"
+
+
+move "D:\NLG\Source Data\Conservation Cases\Salesforce_DeathBenefit.csv" "D:\NLG\Conservation Case Automation\Archive\Archive_%Mth%%Day%%Yr%%Hr%%Mn%"
