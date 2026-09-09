@@ -1,0 +1,35 @@
+D:
+cd "D:\DataLoader\v62.0.1\bin"
+
+
+call process "D:\NLG\Automated Purger\Config" csvExportBuyingCustomerCases > "D:\NLG\Automated Purger\Log\BuyingCustomerCaseExport.log"
+call process "D:\NLG\Automated Purger\Config" csvExportSellingCustomerCases > "D:\NLG\Automated Purger\Log\SellingCustomerCaseExport.log"
+call process "D:\NLG\Automated Purger\Config" csvExportConservationCasesCases > "D:\NLG\Automated Purger\Log\ConservationCaseExport.log"
+call process "D:\NLG\Automated Purger\Config" csvExportIdCases > "D:\NLG\Automated Purger\Log\CaseIDExport.log"
+call process "D:\NLG\Automated Purger\Config" csvDeleteCases> "D:\NLG\Automated Purger\Log\CaseDelete.log"
+call process "D:\NLG\Automated Purger\Config" csvExportAllTask > "D:\NLG\Automated Purger\Log\TaskExport.log"
+call process "D:\NLG\Automated Purger\Config" csvExportIdTask> "D:\NLG\Automated Purger\Log\TaskIdExport.log"
+call process "D:\NLG\Automated Purger\Config" csvDeleteTask> "D:\NLG\Automated Purger\Log\TaskDelete.log"
+
+set Mth=%Date:~4,2%
+set Day=%Date:~7,2%
+set Yr=%Date:~10,4%
+set Hr=%Time:~0,2%
+set Mn=%Time:~3,2%
+
+md "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+
+
+move "D:\NLG\Source Data\Extracted Cases\BuyingCustomerCaseBackup.csv" "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+move "D:\NLG\Source Data\Extracted Cases\SellingCustomerCasesBackup.csv" "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+move "D:\NLG\Source Data\Extracted Cases\ConservationCasesBackup.csv" "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+move "D:\NLG\Source Data\Extracted Cases\CaseIdToBeDeleted.csv" "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+move "D:\NLG\Source Data\Extracted Tasks\TasksBackup.csv" "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+move "D:\NLG\Source Data\Extracted Tasks\TaskIdsToBeDeleted.csv" "D:\NLG\Automated Purger\Archive\Archive_AutoPurgedExtracts_%Mth%%Day%%Yr%%Hr%%Mn%"
+
+
+
+
+
+
+
