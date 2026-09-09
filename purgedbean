@@ -1,0 +1,212 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    
+    <bean id="csvExportBuyingCustomerCases" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Export Buying Customer Cases excluding last 12 months which are to be deleted for backup.</description>
+         <property name="name" value="csvExportBuyingCustomerCases"/>
+         <property name="configOverrideMap">
+             <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Case"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="sfdc.extractionSOQL" value="Select AG_49__c, AST_Reason__c, AST_Type__c, AccountId, Account_Number__c, Account_Number_del__c, Accumulated_Value__c, Add_Training_Assistance__c, Advanced_Sales_Concept__c, Age_Days__c, Age_Hours__c, AgencyContractDate__c, AgencyName__c, AgencyNumber__c, AgentNumber__c, Alternate_Caller__c, Annual_Premium__c, Annuity_Premium__c, AssetId, Auto_Escalated_Previous_Owner__c, Be_Your_Own_Banker__c, Bonus_Accumulation_Value__c, BusinessHoursId, CP_Sub_Category__c, CTP__c, CX_Agent_Name__c, CX_Category__c, CX_Onbase_Workflow_Exists__c, CX_Send_To_Agent_Portal__c, CallReasonId__c, Call_Back_Number__c, Call_Reason__c, Call_Reasons__c, Call_Recording_URL__c, Call_Shadow__c, Call_Transcript_File__c, Caller_Name__c, Caller_Type__c, Cancel_Surrender_Reason__c, CaseNumber, Case_Distribution_List__c, Case_Origin_Request_Type__c, Cash_Value__c, Category__c, Cause_of_Death__c, Channel__c, Claim_Number__c, Claim__c, Class_Action__c, ClientEmail__c, Client_Meeting__c, ClosedDate, Comment__c, Comments, Commission_Hold__c, Communicator_Signature__c, Communicator_User__c, Communicator__c, Community_Property_State__c, Company__c, Complete_Escalation__c, CompletedWorkFlow__c, ConservationEmailAgency__c, ConservationEmailAgent__c, ConservationProcess__c, Conservation_Score__c, ContactEmail, ContactFax, ContactId, ContactMobile, ContactPhone, Contact_Made__c, Contact_Preference__c, CreatedById, CreatedByMe__c, CreatedDate, Created_By_Profile__c, Created_Workflow_Item__c, Date_Condition_Began__c, Date_Of_Birth__c, Date_of_Death__c, Department_Origination__c, Departments_Involved__c, Description, Description_Benefit__c, Description_callReason__c, Details_of_the_Condition__c, Direct_Pay__c, Draft_Date__c, Due_Date__c, Employee_Tiers__c, EntitlementId, Erisa_Plan__c, Escalation_Disposition__c, Escalation_Notes__c, Escalation_Reason__c, Escalation_Type__c, Face_Amount__c, FactFinderReceivedDate__c, First_Call_Resolution__c, Five9SessionId__c, Follow_up_Reasons__c, Follow_up__c, Fraud_Reasons__c, From_Contact__c, From_Replacing_Agent__c, HasCommentsUnreadByOwner, HasSelfServiceComments, Id, Illustrations__c, Inbound_Outbound__c, Initial_Premium_Mode__c, Insurance__c, InsuredFirstName__c, InsuredLastName__c, Insured_Name_Web__c, Insured_s_First_Name__c, Insured_s_Name__c, IsCOVID__c, IsClosed, IsClosedOnCreate, IsDeleted, IsEscalated, IsSelfServiceClosed, IsStopped, IsVisibleInSelfService, LOA__c, LOB__c, Language, Large_Case_Minimum_2_mill__c, LastModifiedById, LastModifiedDate, LastReferencedDate, LastViewedDate, Last_Redesigned_Date__c, Lead__c, Life_Insurance_Face_Amount__c, Loan_Balance__c, Loan_PayOff_Value__c, MGA__c, Married_20179_Automated__c, Married_2748_Onetime__c, Married__c, MasterRecordId, MilestoneStatus, MissedPremiums__c, Modified_Approved_Reason__c, MonthlyPayAmount__c, Multi_Life_Case_Status__c, Multi_Life_WNAP__c, NLG_Escalated__c, Natural_Calamity__c, NewRVP_1__c, NewRVP_2__c, NewSVP_1__c, NewSVP_2__c, New_Draft_Date__c, Not_Available_on_Web__c, Number_One__c, NumberofLives__c, OnBase_Document_ID__c, Origin, Original_Agency__c, Original_Agent__c, Outstanding_Requirements__c, OwnerId, Owner_Name__c, PFA_Close_Reason__c, ParentId, Percentage_Surrender_Value__c, Periodic_Withdraw__c, Phone__c, Place_of_Death__c, Plan_Name__c, Policies__c, Policy_Campus__c, Policy_Issue_Date__c, Policy_Number__c, Policy_Owner_Name__c, Policy_Ownership__c, Policy_Record_Type__c, Policy_Status__c, Policy__c, Premium__c, Priority, ProcessInfo__c, ProcessMessage2__c, ProcessMessage__c, Process_Messages_Web__c, ProductId, Product_Type__c, Product__c, Profile__c, Profile_name__c, Proposed_Annual_Premium__c, Proposed_Solution__c, REG_60__c, RVP_1__c, RVP_2__c, Rate_Class__c, Reason, RecordTypeId, Redesign__c, Relationship_To_Insured__c, Replacement_Illustration__c, Replacement__c, Replacing_Agent__c, RequestToReviewTheCallRecording__c, RequestToSpeakToASupervisor__c, Reviewed__c, Rider_Type__c, Root_Cause__c, Root_Department__c, Root_Escalation_Type__c, Root_Invalid__c, Root_Note__c, SLA_for_FCR__c, SVP_1__c, SVP_2__c, Sale_Made__c, SendEmailToAccountOwner__c, Servicing_Agency__c, Servicing_Agent__c, Single_20179_Automated__c, Single_2748_Onetime__c, Single__c, SlaStartDate, Sold__c, SourceId, Sources__c, Special_Pay__c, State__c, Status, StopStartDate, Sub_Root_Cause__c, Subject, Submit_Status__c, SuppliedCompany, SuppliedEmail, SuppliedName, SuppliedPhone, Surrender_Charge__c, Surrender_Form_Received__c, Surrender_From__c, Surrender_Reason__c, Surrender_Requested__c, Surrender_Value__c, SurveyId__c, Survey__c, SystemModstamp, Target_Premium__c, Technical_Web_Issue__c, Term_Annual_Premium__c, Third_Party_Caller__c, Total_Designs__c, Total_Premium__c, Training__c, Transfer_Request_Company__c, Transfer_Type__c, Type, UnabletoSelfServiceReason__c, Underwriting__c, Vetted__c, View_Related_Claim__c, WNAP__c, WebAddressCity__c, WebAddressLine1__c, WebAddressLine2__c, WebAddressPostalCode__c, WebAddressState__c, WebID__c, WebPolicyNumber__c, WebRelationship__c, Web_Tutorial__c, Why_Agent_Called__c, WritingAgent__c, X1035_Date__c, X1035_Exchange__c, X1037__c, X1462__c, X1492__c, X1495__c, X1531__c, X1569__c, X1707__c, X1968__c, X20179__c, X20558_Joint_Owner__c, X20558_One_Corp_Owner__c, X20558_Single_Owner__c, X20558_Two_Corp_Owner__c, X2185__c, X2748__c, X4008__c, X5230CA__c, X5230DE_ND_SD__c, X5230FL__c, X5230__c, X5277__c, X5606__c, Year__c, isAST__c, isHurricane__c, isInforced__c, loan4075__c, of_Minutes__c FROM Case WHERE RecordType.Name = 'Buying Customer' and CreatedDate &lt; LAST_N_MONTHS:12 order by CreatedDate DESC"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Cases\BuyingCustomerCaseBackup.csv"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvExportSellingCustomerCases" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Export Selling Customer Cases excluding last 12 months which are to be deleted for backup</description>
+        <property name="name" value="csvExportSellingCustomerCases"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Case"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="sfdc.extractionSOQL" value="SELECT AG_49__c, AST_Reason__c, AST_Type__c, AccountId, Account_Number__c, Account_Number_del__c, Accumulated_Value__c, Add_Training_Assistance__c, Advanced_Sales_Concept__c, Age_Days__c, Age_Hours__c, AgencyContractDate__c, AgencyName__c, AgencyNumber__c, AgentNumber__c, Alternate_Caller__c, Annual_Premium__c, Annuity_Premium__c, AssetId, Auto_Escalated_Previous_Owner__c, Be_Your_Own_Banker__c, Bonus_Accumulation_Value__c, BusinessHoursId, CP_Sub_Category__c, CTP__c, CX_Agent_Name__c, CX_Category__c, CX_Onbase_Workflow_Exists__c, CX_Send_To_Agent_Portal__c, CallReasonId__c, Call_Back_Number__c, Call_Reason__c, Call_Reasons__c, Call_Recording_URL__c, Call_Shadow__c, Call_Transcript_File__c, Caller_Name__c, Caller_Type__c, Cancel_Surrender_Reason__c, CaseNumber, Case_Distribution_List__c, Case_Origin_Request_Type__c, Cash_Value__c, Category__c, Cause_of_Death__c, Channel__c, Claim_Number__c, Claim__c, Class_Action__c, ClientEmail__c, Client_Meeting__c, ClosedDate, Comment__c, Comments, Commission_Hold__c, Communicator_Signature__c, Communicator_User__c, Communicator__c, Community_Property_State__c, Company__c, Complete_Escalation__c, CompletedWorkFlow__c, ConservationEmailAgency__c, ConservationEmailAgent__c, ConservationProcess__c, Conservation_Score__c, ContactEmail, ContactFax, ContactId, ContactMobile, ContactPhone, Contact_Made__c, Contact_Preference__c, CreatedById, CreatedByMe__c, CreatedDate, Created_By_Profile__c, Created_Workflow_Item__c, Date_Condition_Began__c, Date_Of_Birth__c, Date_of_Death__c, Department_Origination__c, Departments_Involved__c, Description, Description_Benefit__c, Description_callReason__c, Details_of_the_Condition__c, Direct_Pay__c, Draft_Date__c, Due_Date__c, Employee_Tiers__c, EntitlementId, Erisa_Plan__c, Escalation_Disposition__c, Escalation_Notes__c, Escalation_Reason__c, Escalation_Type__c, Face_Amount__c, FactFinderReceivedDate__c, First_Call_Resolution__c, Five9SessionId__c, Follow_up_Reasons__c, Follow_up__c, Fraud_Reasons__c, From_Contact__c, From_Replacing_Agent__c, HasCommentsUnreadByOwner, HasSelfServiceComments, Id, Illustrations__c, Inbound_Outbound__c, Initial_Premium_Mode__c, Insurance__c, InsuredFirstName__c, InsuredLastName__c, Insured_Name_Web__c, Insured_s_First_Name__c, Insured_s_Name__c, IsCOVID__c, IsClosed, IsClosedOnCreate, IsDeleted, IsEscalated, IsSelfServiceClosed, IsStopped, IsVisibleInSelfService, LOA__c, LOB__c, Language, Large_Case_Minimum_2_mill__c, LastModifiedById, LastModifiedDate, LastReferencedDate, LastViewedDate, Last_Redesigned_Date__c, Lead__c, Life_Insurance_Face_Amount__c, Loan_Balance__c, Loan_PayOff_Value__c, MGA__c, Married_20179_Automated__c, Married_2748_Onetime__c, Married__c, MasterRecordId, MilestoneStatus, MissedPremiums__c, Modified_Approved_Reason__c, MonthlyPayAmount__c, Multi_Life_Case_Status__c, Multi_Life_WNAP__c, NLG_Escalated__c, Natural_Calamity__c, NewRVP_1__c, NewRVP_2__c, NewSVP_1__c, NewSVP_2__c, New_Draft_Date__c, Not_Available_on_Web__c, Number_One__c, NumberofLives__c, OnBase_Document_ID__c, Origin, Original_Agency__c, Original_Agent__c, Outstanding_Requirements__c, OwnerId, Owner_Name__c, PFA_Close_Reason__c, ParentId, Percentage_Surrender_Value__c, Periodic_Withdraw__c, Phone__c, Place_of_Death__c, Plan_Name__c, Policies__c, Policy_Campus__c, Policy_Issue_Date__c, Policy_Number__c, Policy_Owner_Name__c, Policy_Ownership__c, Policy_Record_Type__c, Policy_Status__c, Policy__c, Premium__c, Priority, ProcessInfo__c, ProcessMessage2__c, ProcessMessage__c, Process_Messages_Web__c, ProductId, Product_Type__c, Product__c, Profile__c, Profile_name__c, Proposed_Annual_Premium__c, Proposed_Solution__c, REG_60__c, RVP_1__c, RVP_2__c, Rate_Class__c, Reason, RecordTypeId, Redesign__c, Relationship_To_Insured__c, Replacement_Illustration__c, Replacement__c, Replacing_Agent__c, RequestToReviewTheCallRecording__c, RequestToSpeakToASupervisor__c, Reviewed__c, Rider_Type__c, Root_Cause__c, Root_Department__c, Root_Escalation_Type__c, Root_Invalid__c, Root_Note__c, SLA_for_FCR__c, SVP_1__c, SVP_2__c, Sale_Made__c, SendEmailToAccountOwner__c, Servicing_Agency__c, Servicing_Agent__c, Single_20179_Automated__c, Single_2748_Onetime__c, Single__c, SlaStartDate, Sold__c, SourceId, Sources__c, Special_Pay__c, State__c, Status, StopStartDate, Sub_Root_Cause__c, Subject, Submit_Status__c, SuppliedCompany, SuppliedEmail, SuppliedName, SuppliedPhone, Surrender_Charge__c, Surrender_Form_Received__c, Surrender_From__c, Surrender_Reason__c, Surrender_Requested__c, Surrender_Value__c, SurveyId__c, Survey__c, SystemModstamp, Target_Premium__c, Technical_Web_Issue__c, Term_Annual_Premium__c, Third_Party_Caller__c, Total_Designs__c, Total_Premium__c, Training__c, Transfer_Request_Company__c, Transfer_Type__c, Type, UnabletoSelfServiceReason__c, Underwriting__c, Vetted__c, View_Related_Claim__c, WNAP__c, WebAddressCity__c, WebAddressLine1__c, WebAddressLine2__c, WebAddressPostalCode__c, WebAddressState__c, WebID__c, WebPolicyNumber__c, WebRelationship__c, Web_Tutorial__c, Why_Agent_Called__c, WritingAgent__c, X1035_Date__c, X1035_Exchange__c, X1037__c, X1462__c, X1492__c, X1495__c, X1531__c, X1569__c, X1707__c, X1968__c, X20179__c, X20558_Joint_Owner__c, X20558_One_Corp_Owner__c, X20558_Single_Owner__c, X20558_Two_Corp_Owner__c, X2185__c, X2748__c, X4008__c, X5230CA__c, X5230DE_ND_SD__c, X5230FL__c, X5230__c, X5277__c, X5606__c, Year__c, isAST__c, isHurricane__c, isInforced__c, loan4075__c, of_Minutes__c FROM Case WHERE RecordType.Name = 'Selling Customer' and CreatedDate &lt; LAST_N_MONTHS:12 order by CreatedDate DESC"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Cases\SellingCustomerCasesBackup.csv"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvExportConservationCasesCases" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Export Conservation Cases excluding last 12 months which are to be deleted for backup</description>
+        <property name="name" value="csvExportConservationCasesCases"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Case"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="sfdc.extractionSOQL" value="Select AG_49__c, AST_Reason__c, AST_Type__c, AccountId, Account_Number__c, Account_Number_del__c, Accumulated_Value__c, Add_Training_Assistance__c, Advanced_Sales_Concept__c, Age_Days__c, Age_Hours__c, AgencyContractDate__c, AgencyName__c, AgencyNumber__c, AgentNumber__c, Alternate_Caller__c, Annual_Premium__c, Annuity_Premium__c, AssetId, Auto_Escalated_Previous_Owner__c, Be_Your_Own_Banker__c, Bonus_Accumulation_Value__c, BusinessHoursId, CP_Sub_Category__c, CTP__c, CX_Agent_Name__c, CX_Category__c, CX_Onbase_Workflow_Exists__c, CX_Send_To_Agent_Portal__c, CallReasonId__c, Call_Back_Number__c, Call_Reason__c, Call_Reasons__c, Call_Recording_URL__c, Call_Shadow__c, Call_Transcript_File__c, Caller_Name__c, Caller_Type__c, Cancel_Surrender_Reason__c, CaseNumber, Case_Distribution_List__c, Case_Origin_Request_Type__c, Cash_Value__c, Category__c, Cause_of_Death__c, Channel__c, Claim_Number__c, Claim__c, Class_Action__c, ClientEmail__c, Client_Meeting__c, ClosedDate, Comment__c, Comments, Commission_Hold__c, Communicator_Signature__c, Communicator_User__c, Communicator__c, Community_Property_State__c, Company__c, Complete_Escalation__c, CompletedWorkFlow__c, ConservationEmailAgency__c, ConservationEmailAgent__c, ConservationProcess__c, Conservation_Score__c, ContactEmail, ContactFax, ContactId, ContactMobile, ContactPhone, Contact_Made__c, Contact_Preference__c, CreatedById, CreatedByMe__c, CreatedDate, Created_By_Profile__c, Created_Workflow_Item__c, Date_Condition_Began__c, Date_Of_Birth__c, Date_of_Death__c, Department_Origination__c, Departments_Involved__c, Description, Description_Benefit__c, Description_callReason__c, Details_of_the_Condition__c, Direct_Pay__c, Draft_Date__c, Due_Date__c, Employee_Tiers__c, EntitlementId, Erisa_Plan__c, Escalation_Disposition__c, Escalation_Notes__c, Escalation_Reason__c, Escalation_Type__c, Face_Amount__c, FactFinderReceivedDate__c, First_Call_Resolution__c, Five9SessionId__c, Follow_up_Reasons__c, Follow_up__c, Fraud_Reasons__c, From_Contact__c, From_Replacing_Agent__c, HasCommentsUnreadByOwner, HasSelfServiceComments, Id, Illustrations__c, Inbound_Outbound__c, Initial_Premium_Mode__c, Insurance__c, InsuredFirstName__c, InsuredLastName__c, Insured_Name_Web__c, Insured_s_First_Name__c, Insured_s_Name__c, IsCOVID__c, IsClosed, IsClosedOnCreate, IsDeleted, IsEscalated, IsSelfServiceClosed, IsStopped, IsVisibleInSelfService, LOA__c, LOB__c, Language, Large_Case_Minimum_2_mill__c, LastModifiedById, LastModifiedDate, LastReferencedDate, LastViewedDate, Last_Redesigned_Date__c, Lead__c, Life_Insurance_Face_Amount__c, Loan_Balance__c, Loan_PayOff_Value__c, MGA__c, Married_20179_Automated__c, Married_2748_Onetime__c, Married__c, MasterRecordId, MilestoneStatus, MissedPremiums__c, Modified_Approved_Reason__c, MonthlyPayAmount__c, Multi_Life_Case_Status__c, Multi_Life_WNAP__c, NLG_Escalated__c, Natural_Calamity__c, NewRVP_1__c, NewRVP_2__c, NewSVP_1__c, NewSVP_2__c, New_Draft_Date__c, Not_Available_on_Web__c, Number_One__c, NumberofLives__c, OnBase_Document_ID__c, Origin, Original_Agency__c, Original_Agent__c, Outstanding_Requirements__c, OwnerId, Owner_Name__c, PFA_Close_Reason__c, ParentId, Percentage_Surrender_Value__c, Periodic_Withdraw__c, Phone__c, Place_of_Death__c, Plan_Name__c, Policies__c, Policy_Campus__c, Policy_Issue_Date__c, Policy_Number__c, Policy_Owner_Name__c, Policy_Ownership__c, Policy_Record_Type__c, Policy_Status__c, Policy__c, Premium__c, Priority, ProcessInfo__c, ProcessMessage2__c, ProcessMessage__c, Process_Messages_Web__c, ProductId, Product_Type__c, Product__c, Profile__c, Profile_name__c, Proposed_Annual_Premium__c, Proposed_Solution__c, REG_60__c, RVP_1__c, RVP_2__c, Rate_Class__c, Reason, RecordTypeId, Redesign__c, Relationship_To_Insured__c, Replacement_Illustration__c, Replacement__c, Replacing_Agent__c, RequestToReviewTheCallRecording__c, RequestToSpeakToASupervisor__c, Reviewed__c, Rider_Type__c, Root_Cause__c, Root_Department__c, Root_Escalation_Type__c, Root_Invalid__c, Root_Note__c, SLA_for_FCR__c, SVP_1__c, SVP_2__c, Sale_Made__c, SendEmailToAccountOwner__c, Servicing_Agency__c, Servicing_Agent__c, Single_20179_Automated__c, Single_2748_Onetime__c, Single__c, SlaStartDate, Sold__c, SourceId, Sources__c, Special_Pay__c, State__c, Status, StopStartDate, Sub_Root_Cause__c, Subject, Submit_Status__c, SuppliedCompany, SuppliedEmail, SuppliedName, SuppliedPhone, Surrender_Charge__c, Surrender_Form_Received__c, Surrender_From__c, Surrender_Reason__c, Surrender_Requested__c, Surrender_Value__c, SurveyId__c, Survey__c, SystemModstamp, Target_Premium__c, Technical_Web_Issue__c, Term_Annual_Premium__c, Third_Party_Caller__c, Total_Designs__c, Total_Premium__c, Training__c, Transfer_Request_Company__c, Transfer_Type__c, Type, UnabletoSelfServiceReason__c, Underwriting__c, Vetted__c, View_Related_Claim__c, WNAP__c, WebAddressCity__c, WebAddressLine1__c, WebAddressLine2__c, WebAddressPostalCode__c, WebAddressState__c, WebID__c, WebPolicyNumber__c, WebRelationship__c, Web_Tutorial__c, Why_Agent_Called__c, WritingAgent__c, X1035_Date__c, X1035_Exchange__c, X1037__c, X1462__c, X1492__c, X1495__c, X1531__c, X1569__c, X1707__c, X1968__c, X20179__c, X20558_Joint_Owner__c, X20558_One_Corp_Owner__c, X20558_Single_Owner__c, X20558_Two_Corp_Owner__c, X2185__c, X2748__c, X4008__c, X5230CA__c, X5230DE_ND_SD__c, X5230FL__c, X5230__c, X5277__c, X5606__c, Year__c, isAST__c, isHurricane__c, isInforced__c, loan4075__c, of_Minutes__c FROM Case WHERE RecordType.Name = 'Conservation Case' and CreatedDate &lt; LAST_N_MONTHS:12 order by CreatedDate DESC"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Cases\ConservationCasesBackup.csv"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvExportIdCases" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Export Ids Only from Buying Customer, Selling Customer and Conservation Cases excluding last 12 months to be deleted</description>
+        <property name="name" value="csvExportIdCases"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Case"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="sfdc.extractionSOQL" value="SELECT Id FROM Case WHERE RecordType.Name IN ('Buying Customer', 'Selling Customer', 'Conservation Case') and CreatedDate &lt; LAST_N_MONTHS:12 order by CreatedDate DESC"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Cases\CaseIdToBeDeleted.csv"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvDeleteCases" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Deleting the Cases using Id's data extracted</description>
+        <property name="name" value="csvDeleteCases"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="100"/>
+                <entry key="sfdc.entity" value="Case"/>
+                <entry key="process.operation" value="delete"/>
+                <entry key="dataAccess.type" value="csvRead"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Cases\CaseIdToBeDeleted.csv"/>
+                <entry key="process.outputError" value="D:\NLG\Automated Purger\Load Result\Case Deletion\errorExportCase.csv"/>
+                <entry key="process.outputSuccess" value="D:\NLG\Automated Purger\Load Result\Case Deletion\successExportCase.csv"/>
+                <entry key="process.mappingFile" value="D:\NLG\Automated Purger\Config\SDL\CaseDeleteMap.sdl"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvExportAllTask" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Export all Task excluding last 12 months to be deleted for backup</description>
+        <property name="name" value="csvExportAllTask"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Task"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="sfdc.extractionSOQL" value="Select AG_49__c, AccountId, ActivityDate, AgencyName__c, AgentEmail__c, AgentFirstName__c, AgentFullName__c, AgentPhone__c, AgentState__c, Agent_Phone_No__c, Agent__c, Annual_Premium__c, CallDisposition, CallDurationInSeconds, CallObject, CallType, Call_Recording_URL__c, Caller_Name__c, Case_Design__c, Cases__c, Category__c, Class_Action_Settlement__c, Client_Meeting__c, Client__c, Comment__c, CompletedDateTime, Completion_Date__c, Completion_Time__c, Complex_Illustrations__c, CreatedById, CreatedDate, Created_by_Automation__c, CventEvents__Attendee__c, CventEvents__EventTitle__c, CventEvents__Event__c, Department__c, Description, Disposition__c, Easy_Illustrations__c, Escalated_To_Management__c, Five9__Five9ANI__c, Five9__Five9AgentExtension__c, Five9__Five9AgentName__c, Five9__Five9Agent__c, Five9__Five9CallType__c, Five9__Five9Campaign__c, Five9__Five9DNIS__c, Five9__Five9HandleTime__c, Five9__Five9SessionId__c, Five9__Five9TalkAndHoldTimeInSeconds__c, Five9__Five9TaskType__c, Five9__Five9WrapTime__c, Hours_Open__c, Id, Illustrations__c, Inbound_Outbound__c, IsArchived, IsCOVID__c, IsClosed, IsDeleted, IsHighPriority, IsRecurrence, IsReminderSet, IsVisibleInSelfService, LastModifiedById, LastModifiedDate, LastModifiedDateAndTime__c, Left_Voicemail__c, Life_Sales_Concept__c, MarketPerformance__c, Moderate_Illustrations__c, No_of_Complex_Illustrations__c, No_of_Easy_Illustrations__c, No_of_Moderate_Illustrations__c, Number_of_Cases__c, Number_of_Illustrations__c, OnBase_Email_Address__c, Outbound_Reason__c, Outbound_Type__c, Outphone__c, OwnerId, PolicyAgent__c, Policy_Owner_Email__c, Policy_Owner_Phone__c, Policy_Owner__c, Policy__c, Premium_Finance__c, Priority, Products__c, Profile__c, RVPNLGAssociation__c, RecordTypeId, RecurrenceActivityId, RecurrenceDayOfMonth, RecurrenceDayOfWeekMask, RecurrenceEndDateOnly, RecurrenceInstance, RecurrenceInterval, RecurrenceMonthOfYear, RecurrenceRegeneratedType, RecurrenceStartDateOnly, RecurrenceTimeZoneSidKey, RecurrenceType, ReminderDateTime, Response__c, SPIA_to_Life__c, Sales_Unit__c, Send_Log_a_Call_Survey__c, Status, Sub_category__c, Subject, SurveySent__c, SystemModstamp, Target__c, TaskSubtype, Time_On_Call_Mins__c, Training__c, Type, WhatCount, WhatId, WhoCount, WhoId, X3rd_Party__c, X7702_Questions__c FROM Task WHERE CreatedDate &lt; LAST_N_MONTHS:12 order by CreatedDate DESC"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Tasks\TasksBackup.csv"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvExportIdTask" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Export Ids Only from Task of excluding last 12 months to be deleted</description>
+        <property name="name" value="csvExportIdTask"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Task"/>
+                <entry key="process.operation" value="extract"/>
+                <entry key="dataAccess.type" value="csvWrite"/>
+                <entry key="sfdc.extractionSOQL" value="SELECT Id FROM Task WHERE CreatedDate &lt; LAST_N_MONTHS:12 order by CreatedDate DESC"/>
+                <entry key="dataAccess.writeUTF8" value="true"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Tasks\TaskIdsToBeDeleted.csv"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+
+    <bean id="csvDeleteTask" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Deleting the Tasks data from extracted Ids</description>
+        <property name="name" value="csvDeleteTask"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://nationallife.my.salesforce.com"/>
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                    <!--  password below has been encrypted using key file, therefore it will not work without the key setting: process.encryptionKeyFile
+                    the password is not a valid encrypted value, please generate the real value using encrypt.bat utility  -->
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="200"/>
+                <entry key="sfdc.entity" value="Task"/>
+                <entry key="process.operation" value="delete"/>
+                <entry key="dataAccess.type" value="csvRead"/>
+                <entry key="dataAccess.useBulkApi" value="true"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Extracted Tasks\TaskIdsToBeDeleted.csv"/>
+                <entry key="process.outputError" value="D:\NLG\Automated Purger\Load Result\Task Deletion\errortask.csv"/>
+                <entry key="process.outputSuccess" value="D:\NLG\Automated Purger\Load Result\Task Deletion\successtask.csv"/>
+                <entry key="process.mappingFile" value="D:\NLG\Automated Purger\Config\SDL\TaskDeleteMap.sdl"/>
+                <entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>
