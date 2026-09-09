@@ -1,0 +1,51 @@
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+    <bean id="CaseStagingInsert" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+        <description>Case Staging records to insert in SF to create Conservation Cases.</description>
+        <property name="name" value="CaseStagingInsert"/>
+        <property name="configOverrideMap">
+            <map>
+                <entry key="sfdc.endpoint" value="https://login.salesforce.com"/> 
+                <entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+                <entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>  
+                <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+                <entry key="sfdc.timeoutSecs" value="600"/>
+                <entry key="sfdc.loadBatchSize" value="1"/>
+                <entry key="sfdc.entity" value="CaseStaging__c"/>
+		<entry key="sfdc.externalIdField" value="PolicyNumber__c"/>
+                <entry key="process.operation" value="upsert"/>
+		<entry key="sfdc.insertNulls" value="False"/>
+                <entry key="dataAccess.name" value="D:\NLG\Source Data\Conservation Cases\Salesforce_DeathBenefit.csv"/>
+		<entry key="process.mappingFile" value="D:\NLG\Conservation Case Automation\Config\CaseStagingMap.sdl"/>
+                <entry key="dataAccess.type" value="csvRead"/>
+                <entry key="process.initialLastRunDate" value="2020-07-22T00:00:00.000-0800"/>
+                <entry key="process.statusOutputDirectory" value="D:\NLG\Conservation Case Automation\LoadResult"/>
+		<entry key="sfdc.timezone" value="America/Chicago"/>
+            </map>
+        </property>
+    </bean> 
+
+<!--Test Bean-->
+
+<bean id="csvExportLead" class="com.salesforce.dataloader.process.ProcessRunner" scope="singleton">
+		<description>Export Leads which are to be deleted</description>
+        <property name="name" value="csvExportLead"/>
+        <property name="configOverrideMap">
+        <map>
+			<entry key="sfdc.endpoint" value="https://login.salesforce.com"/> 
+			<entry key="sfdc.username" value="datamanagement.user@nationallife.com"/>
+			<entry key="sfdc.password" value="26d89198e4100aafabb16fd743ade0e93931e48abd7b7822e24c336921194f1c8348cb5b1105209ca3e882007283e5c78847dea1ca4b13d344e134d196ff34f6"/>  
+            <entry key="process.encryptionKeyFile" value="D:\NLG\Config\dataLoader.key"/>
+		    <entry key="sfdc.timeoutSecs" value="600"/>
+			<entry key="sfdc.loadBatchSize" value="200"/>
+			<entry key="sfdc.entity" value="Lead"/>
+			<entry key="process.operation" value="extract"/>
+			<entry key="dataAccess.type" value="csvWrite"/>
+                        <entry key="sfdc.extractionSOQL" value="SELECT Id  FROM Lead LIMIT 10"/>
+			<entry key="dataAccess.writeUTF8" value="true" />
+			<entry key="dataAccess.name" value="D:\Conservation Case Automation\test\testExtract.csv" />
+			<entry key="sfdc.timezone" value="America/Chicago"/>
+	    </map>
+        </property>
+   </bean> 
+</beans>
