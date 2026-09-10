@@ -1,0 +1,90 @@
+Objective
+
+Salesforce is retiring its Connected App framework for external integrations and requires migration to External Client Apps (ECA). This is a Salesforce platform change, not a SailPoint product update. SailPoint has updated the ISC Salesforce connector to comply and published the ECA package on AgentExchange. You must complete migration by September 30, 2026, to maintain connectivity.
+This document describes the steps to migrate the SailPoint Salesforce integration from the legacy Connected App authentication to the new External Client App (ECA) authentication.
+Prerequisites
+Before starting the authentication process, ensure the following are completed in Salesforce:
+1.	Install the SailPoint External Client App package from AppExchange in Salesforce.
+2.	Enable the External Client App (ECA) feature in Salesforce.
+3.	Ensure the Service Account has required permissions.
+4.	Confirm the ECA feature is enabled in the Salesforce org.
+Salesforce Configuration Steps
+
+Step 1 – Install External Client App
+
+Install the Salesforce External Client App package (SailPoint Identity Security for Salesforce) from AppExchange.
+After installation, verify the package is available under: Setup → Installed Packages
+Step 2 - Enable External Client App
+Navigate to:
+
+Setup → External Client App Manager
+Enable the SailPoint External Client App feature for the Salesforce org.
+Step 3 - Ensure Service Account Permission
+Navigate to:
+Setup → Users → Service Account
+Username: User IdentityNow (identitynowuser@nationallife.com)
+Profile: Identity Now read Only
+Permission set: No permission set is assigned to this Service account.
+UI Access Restriction: The profile (Identity Now read Only) has both API Enabled and API Only User permissions enabled. As a result, the integration account is restricted to API-based access and cannot log in to the Salesforce user interface.
+IP Restriction: Below are the Login IP Ranges added to this Service account (identitynowuser@nationallife.com).
+
+160.109.97.160	160.109.97.167	PTC On Prem
+160.109.125.1	160.109.125.254	PTC On Prem
+204.115.121.1	204.115.121.254	Montpelier On Prem
+
+Note: Ensure this account has all permissions required by the SailPoint integration.
+
+
+SailPoint Configuration
+Authentication Flow: The SailPoint External Client App authenticates using the OAuth 2.0 Authorization Code Grant (Web Server Flow). 
+ 
+ 
+Note:  SailPoint External Client App only supports OAuth 2.0 Authorization Code Grant Type.
+The SailPoint team must complete the following configuration.
+Step 1 - Enable ECA Toggle
+Navigate to the Salesforce Source configuration in SailPoint.
+Enable: Enable External Client App (ECA) toggle in SailPoint.
+Step 2 - Enter Salesforce Details
+Provide the following values:
+
+Key	host_name
+Value	https://login.salesforce.com (Production)
+https://test.salesforce.com (Sandbox)
+
+Step 3 - Add the parameter by clicking Add button
+Step 4 - Click Authorize
+User is redirected to the Salesforce login page.
+Login using the User IdentityNow Service Account credentials.
+•	Username
+•	Password
+Step 5 - Consent Screen
+Review the requested permission and click: Allow
+This grants SailPoint access to the Salesforce org.
+After successful login, Salesforce displays the authorization screen.
+Step 6 - Authentication Complete
+After clicking Allow, Salesforce redirects back to SailPoint
+Authentication completes and OAuth access/refresh tokens are issued.
+The External Client App is now successfully authorized.
+
+Validation
+Validate the following after authentication:
+
+•	Check the login the history of the Service account for any IP restrictions.
+•	Authentication completes successfully.
+•	SailPoint can connect to Salesforce.
+•	Account aggregation works successfully.
+•	Provisioning (if configured) functions correctly.
+•	No authentication or permission errors are observed.
+Troubleshooting Checklist
+If authentication fails, verify:
+•	External Client App package is installed.
+•	ECA feature is enabled.
+•	OAuth Setting is enabled in ECA.
+•	Service Account is active.
+•	Service Account has required permissions.
+•	Login URL is correct.
+•	Host Name is correct.
+•	No Login IP restrictions block authentication.
+•	SailPoint ECA toggle is enabled.
+•	User clicked Allow on the Salesforce consent screen.
+
