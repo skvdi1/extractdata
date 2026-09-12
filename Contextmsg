@@ -1,0 +1,56 @@
+public with sharing class ContextualAlertController {
+    
+       @AuraEnabled(cacheable=true)
+    public static List<ContextualWrapperData> displayAlertMessage(String recId){
+       List<ContextualWrapperData> ContextualWrapperList = new List<ContextualWrapperData>();
+        
+        if(String.isNotBlank(recId))
+        {
+            
+            for(ContextualMessage__mdt message : ContextualMessageRuleEngineGenerator.getMessage(recId))
+            {
+                ContextualWrapperData ContextualWrapperObj = new ContextualWrapperData();
+                ContextualWrapperObj.contextualContent = message.Content__c;
+                ContextualWrapperObj.contextualContext = message.Context__c;
+                ContextualWrapperObj.contextualDismissible = message.Dismissible__c;
+                ContextualWrapperObj.contextualVariant = message.Variant__c;
+                ContextualWrapperObj.contextualRecId = message.id;
+                ContextualWrapperObj.isWarning = message.Variant__c == 'warning'? true:false;
+                ContextualWrapperObj.isError = message.Variant__c == 'error'? true:false;
+                ContextualWrapperObj.isInfo = message.Variant__c == 'info'? true:false;
+                ContextualWrapperList.add(ContextualWrapperObj);
+            }
+         
+        }
+        else{
+             for(ContextualMessage__mdt message :ContextualMessageRuleEngineGenerator.getSystemMessage())
+            {
+                ContextualWrapperData ContextualWrapperObj = new ContextualWrapperData();
+                ContextualWrapperObj.contextualContent = message.Content__c;
+                ContextualWrapperObj.contextualContext = message.Context__c;
+                ContextualWrapperObj.contextualDismissible = message.Dismissible__c;
+                ContextualWrapperObj.contextualVariant = message.Variant__c;
+                ContextualWrapperObj.contextualRecId = message.id;
+                ContextualWrapperObj.isWarning = message.Variant__c == 'warning'? true:false;
+                ContextualWrapperObj.isError = message.Variant__c == 'error'? true:false;
+                ContextualWrapperObj.isInfo = message.Variant__c == 'info'? true:false;
+                ContextualWrapperList.add(ContextualWrapperObj);
+            }
+        }
+        return ContextualWrapperList;
+        
+    }
+
+    public class ContextualWrapperData
+    {
+        @AuraEnabled public String contextualContent {get;set;}
+        @AuraEnabled public String contextualContext {get;set;}
+        @AuraEnabled public Boolean contextualDismissible {get;set;}
+        @AuraEnabled public String contextualVariant {get;set;}
+        @AuraEnabled public String contextualRecId {get;set;}
+        @AuraEnabled public boolean isWarning {get;set;}
+        @AuraEnabled public boolean isError {get;set;}
+        @AuraEnabled public boolean isInfo {get;set;}
+
+    }  
+}
