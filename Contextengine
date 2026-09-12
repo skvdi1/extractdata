@@ -1,0 +1,69 @@
+public with sharing class ContextualMessageRuleEngineGenerator {
+    public ContextualMessageRuleEngineGenerator() {
+
+    }
+
+
+    public static List<ContextualMessage__mdt> getContextualMessage(ID recordID)
+    {
+        
+        return getMessage(recordID);
+       
+    }
+
+
+    public static List<ContextualMessage__mdt> getMessage(ID recordID)
+    {
+        List<String> parameter = new List<String>{ '\''+recordID+'\'' };
+        Map<String,String> ruleQuery = new Map<String,String>();
+        List<ContextualMessage__mdt> messageList = new List<ContextualMessage__mdt>();
+
+        String sobjectName = String.valueOf(recordID.getSobjectType());
+       
+        Map<String, RuleCriteria__mdt> ruleMap = new Map<String, RuleCriteria__mdt>(
+
+        [SELECT Id,DeveloperName,ForObject__c, Query__c,
+        ForObject__r.FilterLogic__c, (SELECT Id, DeveloperName, Content__c, Variant__c, Dismissible__c, Context__c, 
+        RuleObject__r.FilterLogic__c, Label 
+        FROM ContextualMessage__r WHERE Context__c = 'Record' ) FROM RuleCriteria__mdt  
+        WHERE ForObject__r.ObjectAPIName__c =: sobjectName
+        AND isActive__c = true]
+
+        );
+
+        for(RuleCriteria__mdt rule : ruleMap.values())
+        {
+          
+        String queryTemplate;
+        System.debug(rule.Query__c);
+        queryTemplate = rule.Query__c;
+        System.debug(queryTemplate);
+        String formattedQuery = String.format(queryTemplate, parameter);
+        System.debug( formattedQuery );
+        String formattedQuery2 = formattedQuery.replace('\\', '\'');
+        System.debug( formattedQuery2 );
+        List<Sobject>  records = Database.query(formattedQuery2);
+        System.debug(records.size());
+            if(records.size() > 0 )
+            {
+                messageList.add( rule.ContextualMessage__r );
+            }
+
+        }
+
+        
+        return messageList;
+
+    }
+
+    public  static List<ContextualMessage__mdt> getSystemMessage()
+    {
+
+        List<ContextualMessage__mdt> sMessage = new  List<ContextualMessage__mdt>([SELECT Id, DeveloperName, 
+        Content__c, Variant__c, Dismissible__c, Context__c, 
+        RuleObject__r.FilterLogic__c, Label FROM ContextualMessage__mdt Where Context__c = 'System' ]);
+        return sMessage;
+    }
+   
+
+}//END CLASS
