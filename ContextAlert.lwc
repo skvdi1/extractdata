@@ -1,0 +1,139 @@
+<template>
+
+    <template if:true={messages}>
+        <template for:each={messages} for:item="message">
+			<template if:true={message.isWarning}>
+                <div key={message.contextualRecId} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_warning"
+                style="text-align:left;justify-content:left;" role="alert">
+                <lightning-icon icon-name="utility:warning"  alternative-text="Warning!" variant="warning" 
+                style="margin-right: 2%;"></lightning-icon>
+                          <lightning-formatted-rich-text
+                               value={message.contextualContent}
+                          ></lightning-formatted-rich-text> 
+                                         </div>
+            </template>
+            <template if:true={message.isError}>
+                <div key={message.contextualRecId} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
+                style="text-align:left;justify-content:left;" role="alert">
+                <lightning-icon icon-name="utility:error"  alternative-text="Error!" variant="error" 
+                style="margin-right: 2%;"></lightning-icon>
+                          <lightning-formatted-rich-text
+                               value={message.contextualContent}
+                          ></lightning-formatted-rich-text> 
+                     
+                   </div>
+            </template>
+            <template if:true={message.isInfo}>
+                <div key={message.contextualRecId} class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_info"
+                style="text-align:left;justify-content:left;" role="alert">
+                <lightning-icon icon-name="utility:info"  alternative-text="Info!" variant="info" 
+                style="margin-right: 2%;"></lightning-icon>
+                          <lightning-formatted-rich-text
+                               value={message.contextualContent}
+                          ></lightning-formatted-rich-text> 
+                      
+                   </div>
+            </template>
+       </template>
+    </template>
+</template>
+
+
+
+import { LightningElement,api,track } from 'lwc';
+
+/*From Apex controller fetch the values*/
+import displayAlertMessage from '@salesforce/apex/ContextualAlertController.displayAlertMessage';
+
+export default class ContextualAlert extends LightningElement {
+    @api recordId;
+    @track alertMsg = {
+        "contextualContent":""
+        ,"contextualContext":""
+        ,"contextualDismissible":""
+        ,"contextualVariant":""
+        };
+    @track currentRecordId;
+    @track currentMessage;
+    @track currentVariant;
+    @track warningVariant = [];
+    @track infoVariant = [];
+    @track errorVariant = [];
+
+   // @track messagesTemp = [];
+    @track messages = [];
+    connectedCallback() {
+        
+        if(this.recordId)
+        {
+            this.currentRecordId = this.recordId;
+            displayAlertMessage({recId: this.currentRecordId }).then((result) => {
+               
+               this.messages =  result;
+
+             /* for ( var i = 0; i < this.messages.length; i++ ) {
+                console.info('***'+ JSON.stringify(this.messages) );
+                console.info('***'+ ( this.messages[i].Variant__c == "warning") );
+                console.info('***'+ ( this.messages[i].Varient__c ) );
+
+                if( this.messages[i].Varient__c == "warning")
+                    {
+                      this.warningVariant.push(this.messages[i]);
+                    }
+                    if( this.messages[i].Varient__c == "error")
+                    {
+                      this.errorVariant.push(this.messages[i]);
+                    }
+                    if( this.messages[i].Varient__c == "info")
+                    {
+                      this.infoVariant.push(this.messages[i]);
+                    }
+                }
+
+               console.info('***'+ JSON.stringify(this.warningVariant) );
+
+               this.alertMsg = result;
+                this.currentRecordMessage = this.alertMsg.contextualContent;
+                this.currentVariant = this.alertMsg.contextualVariant;
+                if(this.currentVariant == 'Warning') {
+                    this.warningVariant = true ;
+                }
+                else if(this.currentVariant == 'Informational') {
+                    this.infoVariant = true ;
+                }
+                else if(this.currentVariant == 'Error') {
+                    this.ErrorVariant = true ;
+                }*/
+            }).catch((error) => {
+                    //this.showSpinner = false;
+                    console.error('***'+JSON.stringify(error));
+                   // this.error = error;
+            });
+        }
+        else{
+        displayAlertMessage({recId: null }).then((result) => {
+                this.messages =  result;
+                
+            }).catch((error) => {
+                            //this.showSpinner = false;
+                            console.error('***'+JSON.stringify(error));
+                           // this.error = error;
+                    });
+        }            
+    }//END Function
+    
+}
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>49.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+    </targets>
+</LightningComponentBundle>
